@@ -1,5 +1,7 @@
 package com.beassessment.stocksmanager.controller;
 
+import com.beassessment.stocksmanager.model.dao.StockDetails;
+import com.beassessment.stocksmanager.service.StocksRequestHandlerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,19 +11,25 @@ import java.util.List;
 @RequestMapping(value = "/stocks")
 public class StocksController {
 
+    private final StocksRequestHandlerService stocksRequestHandlerService;
+
+    public StocksController(StocksRequestHandlerService stocksRequestHandlerService) {
+        this.stocksRequestHandlerService = stocksRequestHandlerService;
+    }
+
     @PostMapping("/addStock")
     public ResponseEntity<String> addStock(@RequestBody String stockString) {
-        return ResponseEntity.ok("1");
+        return this.stocksRequestHandlerService.addStock(stockString);
     }
 
     @GetMapping("/getStockDetails/{stock}")
-    public ResponseEntity<String> getStockDetails(@PathVariable String stock) {
-        return ResponseEntity.ok("2");
+    public ResponseEntity<List<StockDetails>> getStockDetails(@PathVariable String stock) {
+        return this.stocksRequestHandlerService.getStockDetails(stock);
     }
 
     @GetMapping("/getQuarterlyStockDetails/{quarter}/{stock}")
-    public ResponseEntity<String> getQuarterlyStockDetails(@PathVariable String quarter, @PathVariable String stock) {
-        return ResponseEntity.ok("3");
+    public ResponseEntity<List<StockDetails>> getQuarterlyStockDetails(@PathVariable String quarter, @PathVariable String stock) {
+        return this.stocksRequestHandlerService.getQuarterlyStockDetails(quarter, stock);
     }
 
     @PostMapping("/uploadBulkStocks")
