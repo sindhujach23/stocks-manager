@@ -34,7 +34,7 @@ public class StocksController {
 
     @PostMapping("/uploadBulkStocks")
     public ResponseEntity<String> uploadBulkStocks(@RequestBody List<String> bulkStocksList) {
-        return ResponseEntity.ok("4");
+        return this.stocksRequestHandlerService.uploadBulkStocks(bulkStocksList);
     }
 
 }
